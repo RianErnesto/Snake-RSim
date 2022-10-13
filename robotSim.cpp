@@ -7,6 +7,7 @@
 using namespace std;
 
 chrono::milliseconds oneFrame(300);
+chrono::milliseconds a(2000);
 
 class Robot {
     public:
@@ -41,6 +42,7 @@ class Robot {
 };
 
 int main() {
+    start:
     Robot robot;
     vector< pair<int, int> > coords;
     int dist = 0;
@@ -148,46 +150,12 @@ int main() {
         }
 
         if (maze[robot.l][robot.c] == '#') {
-            break;
+            robot.l = 8;
+            robot.c = 4;
         }
 
         this_thread::sleep_for(oneFrame);
     }
-
-    while (true) {
-        system("cls");
-
-        if (coords.size() > 0) {
-            maze[coords[coords.size() - 1].first][coords[coords.size() - 1].second] = '.';
-        }
-
-        maze[robot.l][robot.c] = robot.icon;
-
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                cout << maze[i][j] << ' ';
-            }
-            cout << endl;
-        }
-
-        cout << endl;
-        cout << coords[coords.size() - 1].second << ", " << coords[coords.size() - 1].first << endl;
-        cout << endl;
-
-        if (dist < 4) {
-            robot.MoveRight();
-        }
-        else if (dist >= 4 && dist < 6) {
-            robot.MoveUp();
-        }
-        else if (dist >= 6 && dist < 10) {
-            robot.MoveLeft();
-        }
-        else if (dist >= 10 && dist < 15) {
-            robot.MoveUp();
-        }
-
-        this_thread::sleep_for(oneFrame);
 
     return 0;
 }
